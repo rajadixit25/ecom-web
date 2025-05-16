@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="signin.css">
+    <link rel="stylesheet" href="Inavbar.css">
+</head>
+<body>
+    <div class="wrap">
+        <form action="">
+            <h1>User LogIn</h1>
+            <div class="input-box">
+                <input type="text" id="Username" placeholder="Username" required>
+                <i class='bx bx-user' ></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="Password" placeholder="Password" required>
+                <i class='bx bx-key' ></i>
+            </div>
+            <button type="submit" class="btn" onclick="login()">LogIn</button>
+            <div class="message" id="message"></div>
+            <div class="register-link">
+                <p><a href="SignUp.html">Create a Account</a></p>
+                <p><a href="Home.html">Go To Home page</a></p>
+            </div>
+        </form>
+    </div>
+    <script>
+        function login(){
+            const user = document.getElementById("Username").value;
+            const pass= document.getElementById('Password').value;
+            const message = document.getElementById("message");
+
+            if (user == 'admin' && pass == 'user12'){
+                alert("Login Sucessful!")
+                window.location.assign("sign.html")
+            }
+            else{
+                alert("Wrong UserId or Password 'check again'")
+            }
+        }
+
+    </script>
+</body>
+</html>

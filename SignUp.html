@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="SignUp.css">
+</head>
+<body>
+    <div class="container">
+        <div id="registration-form">
+            <h2>Create Account</h2>
+            
+            <div class="form-group">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <div class="error-message" id="firstName-error">First name is required</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <div class="error-message" id="lastName-error">Last name is required</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="mobileNumber">Mobile Number</label>
+                <input type="tel" id="mobileNumber" name="mobileNumber" required>
+                <div class="error-message" id="mobileNumber-error">Please enter a valid mobile number</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="male" name="gender" value="male" required>
+                        <label for="male">Male</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="female" name="gender" value="female">
+                        <label for="female">Female</label>
+                    </div>
+                </div>
+                <div class="error-message" id="gender-error">Please select a gender</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+                <div class="error-message" id="username-error">Username is required</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <div class="error-message" id="password-error">Password must be at least 6 characters</div>
+            </div>
+            
+            <div class="button-group">
+                <button type="button" class="btn-primary" id="registerBtn">Register</button>
+                <button type="button" class="btn-secondary" id="signInBtn">Sign In</a></button>
+            </div>
+        </div>
+        
+        <div class="success-message" id="success-message">
+            <h3>Registration Successful!</h3>
+            <p>Thank you for registering!</p>
+            <a href="signin.html" button type="button" class="btn-primary" id="newRegistrationBtn">Sign In</button>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const registrationForm = document.getElementById('registration-form');
+            const successMessage = document.getElementById('success-message');
+            const registerBtn = document.getElementById('registerBtn');
+            const signInBtn = document.getElementById('signInBtn');
+            const newRegistrationBtn = document.getElementById('newRegistrationBtn');
+            
+            const firstName = document.getElementById('firstName');
+            const lastName = document.getElementById('lastName');
+            const mobileNumber = document.getElementById('mobileNumber');
+            const genderOptions = document.getElementsByName('gender');
+            const username = document.getElementById('username');
+            const password = document.getElementById('password');
+
+            const firstNameError = document.getElementById('firstName-error');
+            const lastNameError = document.getElementById('lastName-error');
+            const mobileNumberError = document.getElementById('mobileNumber-error');
+            const genderError = document.getElementById('gender-error');
+            const usernameError = document.getElementById('username-error');
+            const passwordError = document.getElementById('password-error');
+            
+            registerBtn.addEventListener('click', function() {
+                if (validateForm()) {
+                    registrationForm.style.display = 'none';
+                    successMessage.style.display = 'block';
+                }
+            });
+            
+            signInBtn.addEventListener('click', function() {
+                alert('Redirecting to Sign In page');
+            });
+            
+            newRegistrationBtn.addEventListener('click', function() {
+                document.querySelector('form').reset();
+                
+                hideAllErrors();
+                
+                successMessage.style.display = 'none';
+                registrationForm.style.display = 'block';
+            });
+            
+            function validateForm() {
+                let isValid = true;
+                
+                hideAllErrors();
+                
+                if (!firstName.value.trim()) {
+                    showError(firstNameError);
+                    isValid = false;
+                }
+                
+                if (!lastName.value.trim()) {
+                    showError(lastNameError);
+                    isValid = false;
+                }
+                
+                if (!mobileNumber.value.trim()) {
+                    mobileNumberError.textContent = 'Mobile number is required';
+                    showError(mobileNumberError);
+                    isValid = false;
+                } else if (!/^\d{10}$/.test(mobileNumber.value)) {
+                    mobileNumberError.textContent = 'Please enter a valid 10-digit mobile number';
+                    showError(mobileNumberError);
+                    isValid = false;
+                }
+                
+                let genderSelected = false;
+                for (let i = 0; i < genderOptions.length; i++) {
+                    if (genderOptions[i].checked) {
+                        genderSelected = true;
+                        break;
+                    }
+                }
+                
+                if (!genderSelected) {
+                    showError(genderError);
+                    isValid = false;
+                }
+                
+                if (!username.value.trim()) {
+                    showError(usernameError);
+                    isValid = false;
+                }
+                
+                if (!password.value.trim()) {
+                    passwordError.textContent = 'Password is required';
+                    showError(passwordError);
+                    isValid = false;
+                } else if (password.value.length < 6) {
+                    passwordError.textContent = 'Password must be at least 6 characters';
+                    showError(passwordError);
+                    isValid = false;
+                }
+                
+                return isValid;
+            }
+            
+            function showError(errorElement) {
+                errorElement.style.display = 'block';
+            }
+            
+            function hideAllErrors() {
+                const errorMessages = document.querySelectorAll('.error-message');
+                errorMessages.forEach(function(error) {
+                    error.style.display = 'none';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
